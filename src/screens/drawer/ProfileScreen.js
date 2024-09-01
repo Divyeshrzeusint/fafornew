@@ -22,6 +22,7 @@ import {
   moderateHeight,
   moderateScale,
   moderateWidth,
+  verticalScale,
 } from '../../utils/responsive';
 import Row from '../../components/Row';
 import strings from '../../constants/strings';

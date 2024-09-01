@@ -13,6 +13,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import globalStyles from '../../themes/globalStyles';
+import { moderateHeight, scale } from '../../utils/responsive';
+
 const BalancetransferScreen = ({navigation}) => {
   const [userData, setUserData] = useState('');
   const [refreshData, setrefreshData] = useState(true);
@@ -194,16 +196,18 @@ const styles = StyleSheet.create({
   },
 
   dashContainer: {
-    paddingLeft: 30,
+    paddingLeft: 23,
     paddingRight: 30,
   },
   balanceView: {
     backgroundColor: '#25bfb7',
-    paddingTop: 10,
     paddingBottom: 10,
     borderRadius: 20,
     marginBottom: 15,
     marginTop: 20,
+    height:moderateHeight(23),
+    width:scale(310),
+    alignItems:'center',justifyContent:'center'
   },
   balanceContView: {
     display: 'flex',
@@ -248,6 +252,7 @@ const styles = StyleSheet.create({
     paddingRight: 30,
     marginVertical: 10,
     borderRadius: 15,
+    width:scale(310)
   },
   formGroup: {
     marginTop: 10,

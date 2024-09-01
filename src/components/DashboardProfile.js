@@ -16,6 +16,7 @@ import {
   moderateHeight,
   moderateScale,
   moderateWidth,
+  verticalScale,
 } from '../utils/responsive';
 import colors from '../themes/colors';
 import {useNavigation} from '@react-navigation/native';
@@ -150,7 +151,7 @@ const styles = StyleSheet.create({
   name: {width: moderateWidth(40)},
   profileFooter: {
     flexDirection: 'row',
-    marginTop: moderateHeight(2),
+    marginTop:verticalScale(14),
     justifyContent: 'space-between',
   },
   chip: {

@@ -726,11 +726,14 @@ export function DrawerContent(props) {
     {label: 'My Orders', icon: 'wallet', screen: screens.myOrders},
   ];
 
+  const array = 'data?.name data?.name data?.name';
+  console.log('length', array.length);
+
   return (
     <View
       style={[
         styles.mainContainer,
-        drawerStatus === 'open' && {width: moderateWidth(80)},
+        drawerStatus === 'open' && {width: moderateWidth(85)},
         drawerStatus !== 'open' && {backgroundColor: colors.nevyBlue},
       ]}>
       <StatusBar hidden={true} />
@@ -773,7 +776,11 @@ export function DrawerContent(props) {
             </View>
           </ImageBackground>
 
-          <Drawer.Section style={styles.drawerSection}>
+          <Drawer.Section
+            style={{
+              marginTop:
+                data?.name > 22 ? verticalScale(30) : verticalScale(15),
+            }}>
             {menuItems.map((item, index) => (
               <React.Fragment key={index}>
                 <DrawerItem
@@ -848,21 +855,23 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: moderateScale(50),
   },
   userProfileView: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: verticalScale(50),
     backgroundColor: colors.white,
-    width: scale(250),
-    height: verticalScale(120),
+    width: scale(260),
+    paddingVertical: verticalScale(10),
+    marginLeft: scale(1.5),
     alignSelf: 'center',
     borderRadius: scale(20),
+    marginBottom: verticalScale(-15),
   },
   name: {
-    marginTop: moderateHeight(2),
     marginBottom: moderateHeight(0.3),
     color: colors.greenAccent,
-    paddingTop: verticalScale(30),
+    marginTop: verticalScale(50),
+    marginBottom: verticalScale(2),
+    textAlign: 'center',
   },
   userImg: {
     width: moderateScale(95),
@@ -884,7 +893,7 @@ const styles = StyleSheet.create({
     marginRight: -20,
   },
   drawerSection: {
-    marginTop: 15,
+    marginTop: verticalScale(18),
     // borderBottomWidth:scale(1),
     // borderColor:colors.red
   },
