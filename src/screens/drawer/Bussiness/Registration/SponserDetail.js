@@ -25,8 +25,8 @@ import showMessageonTheScreen from '../../../../components/showMessageonTheScree
 import {Loader} from '../../../../components/Loader';
 
 const placementsetting = [
-  {key: 'left', value: 'l'},
-  {key: 'right', value: 'r'},
+  {key: 'Left', value: 'l'},
+  {key: 'Right', value: 'r'},
 ];
 
 const SponserDetail = () => {
@@ -54,7 +54,7 @@ const SponserDetail = () => {
         `${apiRoutes.businessRegistration}/${apiRoutes.checkSponser}`,
         {
           user_id: global.userData.id,
-          sponser_id: global.userData.self_id,
+          sponser_id: sponsorId,
         },
       );
       if (response.data?.status == 400) {
@@ -159,9 +159,9 @@ const SponserDetail = () => {
           <View style={styles.dropdownContainer}>
             <CustomeInputField
               placeholder={'Sponsor ID'}
-              // onChangeText={setSponsorId}
+              onChangeText={setSponsorId}
               value={sponsorId}
-              // onBlur={handleBlur}
+              onBlur={handleBlur}
               borderColor={colors.black}
               borderWidth={scale(1)}
               borderRadius={scale(10)}
@@ -177,7 +177,7 @@ const SponserDetail = () => {
             />
             <CustomeInputField
               placeholder={'Sponsor Name'}
-              // onChangeText={setSponsorName}
+              onChangeText={setSponsorName}
               value={sponsorName}
               borderColor={colors.black}
               borderWidth={scale(1)}

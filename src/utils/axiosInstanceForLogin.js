@@ -4,7 +4,7 @@ let headers = {};
 
 // creating axios instance with base url and header
 const axiosInstanceForLogin = axios.create({
-  baseURL: apiRoutes.loginUrl,
+  baseURL: apiRoutes.baseUrl,
   headers,
 });
 

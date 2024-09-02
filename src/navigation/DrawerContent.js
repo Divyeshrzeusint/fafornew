@@ -622,9 +622,9 @@ export function DrawerContent(props) {
       label: 'Business',
       icon: 'business',
       submenu: [
-        {label: 'Business Registration', screen: screens.sponserDetail},
-        {label: 'Business Repurchase', screen: screens.welcomeRepurchase},
-        {label: 'Business Upgrade', screen: screens.businessUpgrade},
+        {label: 'Registration', screen: screens.sponserDetail},
+        {label: 'Repurchase', screen: screens.welcomeRepurchase},
+        {label: 'Upgrade', screen: screens.businessUpgrade},
       ],
     },
     {

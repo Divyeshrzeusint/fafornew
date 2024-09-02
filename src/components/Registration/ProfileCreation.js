@@ -89,11 +89,11 @@ const ProfileCreation = ({previousStep, nextStep, currentPosition, labels}) => {
     dateOfBirth: yup.date().required('Date of Birth is required').nullable(),
     password: yup
       .string()
-      .min(8, 'Password must be at least 8 characters')
-      .matches(
-        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{8,}$/,
-        'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character',
-      )
+      .min(6, 'Password must be at least 8 characters')
+      // .matches(
+      //   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{8,}$/,
+      //   'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character',
+      // )
       .required('Password is required'),
     confirmPassword: yup
       .string()
@@ -105,7 +105,7 @@ const ProfileCreation = ({previousStep, nextStep, currentPosition, labels}) => {
       .required('Email is required'),
     mobileNo: yup
       .string()
-      .matches(/^[0-9]{10}$/, 'Mobile number must be exactly 10 digits')
+      // .matches(/^[0-9]{10}$/, 'Mobile number must be exactly 10 digits')
       .required('Mobile number is required'),
     addressLine1: yup.string().required('Address Line 1 is required'),
     city: yup.string().required('City is required'),
@@ -117,13 +117,13 @@ const ProfileCreation = ({previousStep, nextStep, currentPosition, labels}) => {
     shippingState: yup.string().required('Shipping State is required'),
     ifscCode: yup
       .string()
-      .matches(/^[A-Z]{4}0[A-Z0-9]{6}$/, 'Invalid IFSC Code')
+      // .matches(/^[A-Z]{4}0[A-Z0-9]{6}$/, 'Invalid IFSC Code')
       .required('IFSC Code is required'),
     bankName: yup.string().required('Bank Name is required'),
     branchName: yup.string().required('Branch Name is required'),
     accountNumber: yup
       .string()
-      .matches(/^[0-9]{9,18}$/, 'Account Number must be 9 to 18 digits')
+      // .matches(/^[0-9]{9,18}$/, 'Account Number must be 9 to 18 digits')
       .required('Account Number is required'),
     accountName: yup.string().required('Account Name is required'),
   });
