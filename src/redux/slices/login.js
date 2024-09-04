@@ -3,14 +3,14 @@ import axiosInstance from '../../utils/axiosInstance';
 import apiRoutes from '../../constants/apiRoutes';
 import {setStorageValue} from '../../utils/storageManager';
 import storageKeys from '../../constants/storageKeys';
-import axiosInstanceForLogin from '../../utils/axiosInstanceForLogin';
+// import axiosInstanceForLogin from '../../utils/axiosInstanceForLogin';
 
 // Action for Login
 export const userLogin = createAsyncThunk(
   'userLogin',
   async (requestData, {rejectWithValue}) => {
     try {
-      const response = await axiosInstanceForLogin.post(apiRoutes.login, requestData);
+      const response = await axiosInstance.post(apiRoutes.login, requestData);
       const responseData = await response.data;
       if (responseData?.response == 200) {
         global.userData = responseData?.info;

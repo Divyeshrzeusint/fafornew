@@ -42,8 +42,14 @@ const customStyles = {
 const RegistrationScreen = () => {
   const navigation = useNavigation();
   const [currentPosition, setCurrentPosition] = useState(0);
+  const [countrySelectionData, setCountrySectionData] = useState({});
+  const [profileData, setProfileData] = useState({});
+  const [selectedPackage, setSelectedPackage] = useState('');
 
-  const nextStep = () => {
+  const nextStep = (data, screen) => {
+    screen == 'CounrySelection' && setCountrySectionData(data);
+    screen == 'profileScreen' && setProfileData(data)
+    screen == 'packageSelection' && setSelectedPackage(data)
     setCurrentPosition(prevPosition =>
       prevPosition < labels.length - 1 ? prevPosition + 1 : prevPosition,
     );
@@ -68,6 +74,7 @@ const RegistrationScreen = () => {
             nextStep={nextStep}
             currentPosition={currentPosition}
             labels={labels}
+            data={countrySelectionData}
           />
         );
       case 1:
@@ -77,6 +84,8 @@ const RegistrationScreen = () => {
             nextStep={nextStep}
             currentPosition={currentPosition}
             labels={labels}
+            data={countrySelectionData}
+            previousData={profileData}
           />
         );
       case 2:
@@ -86,6 +95,8 @@ const RegistrationScreen = () => {
             nextStep={nextStep}
             currentPosition={currentPosition}
             labels={labels}
+            data={profileData}
+            previousData={selectedPackage}
           />
         );
       case 3:
@@ -95,6 +106,7 @@ const RegistrationScreen = () => {
             nextStep={nextStep}
             currentPosition={currentPosition}
             labels={labels}
+            data={selectedPackage}
           />
         );
       case 4:
@@ -155,7 +167,7 @@ const styles = StyleSheet.create({
     color: colors.theme1,
     fontFamily: Montserrat.SemiBold,
     textAlign: 'center',
-    marginTop:verticalScale(20)
+    marginTop: verticalScale(20),
   },
   subHeaderText: {
     fontSize: scale(11),

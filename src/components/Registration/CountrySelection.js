@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useState, useMemo, useEffect} from 'react';
 import colors from '../../themes/colors';
 import {Montserrat} from '../../themes/fonts';
@@ -13,36 +13,49 @@ import axiosInstanceForBussiness from '../../utils/axiosInstanceForBussiness';
 import apiRoutes from '../../constants/apiRoutes';
 import {Loader} from '../Loader';
 import {useNavigation, useRoute} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CountrySelection = ({
   previousStep,
   nextStep,
   currentPosition,
   labels,
+  data,
 }) => {
   const navigation = useNavigation();
   const route = useRoute();
   const [visible, setVisible] = useState(false);
-  const [country, setCountry] = useState('');
+  const [country, setCountry] = useState();
   const [countryFlag, setCountryFlag] = useState('');
   const [regionData, setRegionData] = useState([]);
-  const [region, setRegion] = useState('');
+  const [region, setRegion] = useState();
   const [agencyData, setAgencyData] = useState([]);
-  const [agency, setAgency] = useState('');
+  const [agency, setAgency] = useState();
+  const [initialData, setInitialData] = useState({});
   const {countryData} = route.params;
 
   useEffect(() => {
     if (country) {
       getCountryFlag();
       getRegionData();
+      country !== data?.country && setRegion('');
     }
   }, [country]);
 
   useEffect(() => {
     if (region) {
       getAgencyData();
+      region !== data?.region && setAgency('');
     }
   }, [region]);
+
+  useEffect(() => {
+    if (data) {
+      setCountry(data?.country);
+      setRegion(data?.region);
+      setAgency(data?.agency);
+    }
+  }, [data]);
 
   // ==================================== Api ================================== //
 
@@ -94,7 +107,12 @@ const CountrySelection = ({
       global.countryId = country?.id;
       global.regionId = region?.region_id;
       global.agency = agency.agency_id;
-      nextStep();
+      const data = {
+        country: country,
+        region: region,
+        agency: agency,
+      };
+      nextStep(data, 'CounrySelection');
       setVisible(false);
     } else {
       !country && showMessageonTheScreen('Country is required field');
@@ -127,11 +145,15 @@ const CountrySelection = ({
   );
 
   const renderBody = () => (
-    <View style={styles.bodyContainer}>
+    <ScrollView style={styles.bodyContainer}>
       <Text style={styles.title}>Choose your country</Text>
       <View style={styles.dropdownContainer}>{memoizedDropdown}</View>
 
-      <View style={[styles.dropdownContainer, {marginTop: verticalScale(15)}]}>
+      <View
+        style={[
+          styles.dropdownContainer,
+          {marginTop: verticalScale(15), marginBottom: verticalScale(10)},
+        ]}>
         <Text style={[styles.title, styles.heading]}>Select Region</Text>
         <CustomDropDown
           placeholder="Select Region"
@@ -228,7 +250,7 @@ const CountrySelection = ({
           </View>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 
   return (
@@ -242,9 +264,12 @@ const CountrySelection = ({
 export default CountrySelection;
 
 const styles = StyleSheet.create({
-  container: {backgroundColor: colors.screenColor},
+  container: {flex: 1, backgroundColor: colors.screenColor},
   bodyContainer: {
+    flex: 1,
     margin: scale(15),
+    marginBottom: verticalScale(1),
+    // backgroundColor:"red",
   },
   title: {
     fontSize: scale(12),
@@ -264,6 +289,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: scale(20),
     marginTop: verticalScale(8),
     borderRadius: scale(10),
+    marginHorizontal: scale(5),
   },
   buttonContainer: {
     flexDirection: 'row',

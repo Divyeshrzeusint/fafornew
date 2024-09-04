@@ -65,6 +65,8 @@ const PackageSelection = ({
   nextStep,
   currentPosition,
   labels,
+  data,
+  previousData,
 }) => {
   const [visible, setVisible] = useState(false);
   const [packageData, setPackageData] = useState([]);
@@ -72,6 +74,7 @@ const PackageSelection = ({
 
   useEffect(() => {
     getPackageData();
+    setSelectedPackage(previousData);
   }, []);
 
   // ==================================== Api ================================== //
@@ -95,7 +98,7 @@ const PackageSelection = ({
 
   const next = () => {
     if (selectedPackage) {
-      nextStep();
+      nextStep(selectedPackage, 'packageSelection');
       global.selectedPackage = selectedPackage;
     } else {
       showMessageonTheScreen('Select any package');
