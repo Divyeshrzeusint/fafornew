@@ -25,6 +25,7 @@ const ProductSelection = ({
   nextStep,
   currentPosition,
   labels,
+  data
 }) => {
   const [visible, setVisible] = useState(false);
   const [productData, setProductData] = useState([]);

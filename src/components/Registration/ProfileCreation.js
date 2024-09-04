@@ -19,6 +19,7 @@ import ShippingAddress from '../profileCreation/ShippingAddress';
 import AccountDetail from '../profileCreation/AccountDetail';
 import PaymentDetail from '../profileCreation/PaymentDetail';
 import showMessageonTheScreen from '../showMessageonTheScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const userData = [
   {title: 'UserName1'},
@@ -27,7 +28,14 @@ const userData = [
 ];
 const GenderData = [{title: 'Male'}, {title: 'Female'}];
 
-const ProfileCreation = ({previousStep, nextStep, currentPosition, labels}) => {
+const ProfileCreation = ({
+  previousStep,
+  nextStep,
+  currentPosition,
+  labels,
+  previousData,
+}) => {
+  console.log('previousData', previousData);
   const [visible, setVisible] = useState(false);
   const [userName, setUserName] = useState('');
   const [userNameStatus, setUserNameStatus] = useState('');
@@ -40,10 +48,30 @@ const ProfileCreation = ({previousStep, nextStep, currentPosition, labels}) => {
   const [selectedShippingState, setSelectedShippingState] = useState('');
   const [bitcoinWalletCode, setBitcoinWalletCode] = useState('');
   const [paypalEmail, setPaypalEmail] = useState('');
+  const [initialData, setInitialData] = useState({});
 
   useEffect(() => {
     getStateByCountry();
+    getInitialProfileData();
   }, []);
+
+  useEffect(() => {
+    setUserName(previousData.userName);
+    setAddressLine2(previousData.addressLine2);
+    setShippingAddressLine2(previousData.shippingAddressLine2);
+    setBitcoinWalletCode(previousData.bitcoinWalletCode);
+    setPaypalEmail(previousData.paypalEmail);
+  }, [previousData]);
+
+  const getInitialProfileData = async () => {
+    try {
+      const data = await AsyncStorage.getItem('profileData');
+      console.log('data', data);
+      setInitialData(JSON.parse(data));
+    } catch (error) {
+      console.log('error in get stored data', error);
+    }
+  };
 
   // ==================================== Api ================================== //
 
@@ -173,24 +201,24 @@ const ProfileCreation = ({previousStep, nextStep, currentPosition, labels}) => {
     () => (
       <Formik
         initialValues={{
-          name: '',
-          gender: '',
-          dateOfBirth: '',
-          password: '',
-          confirmPassword: '',
-          email: '',
-          mobileNo: '',
-          addressLine1: '',
-          city: '',
-          state: '',
-          shippingAddressLine1: '',
-          shippingCity: '',
-          shippingState: '',
-          ifscCode: '',
-          bankName: '',
-          branchName: '',
-          accountNumber: '',
-          accountName: '',
+          name: previousData?.name || '',
+          gender: previousData?.gender || '',
+          dateOfBirth: previousData?.dateOfBirth || '',
+          password: previousData?.password || '',
+          confirmPassword: previousData?.confirmPassword || '',
+          email: previousData?.email || '',
+          mobileNo: previousData?.mobileNo || '',
+          addressLine1: previousData?.addressLine1 || '',
+          city: previousData?.city || '',
+          state: previousData?.state || '',
+          shippingAddressLine1: previousData?.shippingAddressLine1 || '',
+          shippingCity: previousData?.shippingCity || '',
+          shippingState: previousData?.shippingState || '',
+          ifscCode: previousData?.ifscCode || '',
+          bankName: previousData?.bankName || '',
+          branchName: previousData?.branchName || '',
+          accountNumber: previousData?.accountNumber || '',
+          accountName: previousData?.accountName || '',
         }}
         validationSchema={validationSchema}
         onSubmit={(values, actions) => {
@@ -217,7 +245,12 @@ const ProfileCreation = ({previousStep, nextStep, currentPosition, labels}) => {
           global.bitcoinWalletCode = bitcoinWalletCode;
           global.paypalEmail = paypalEmail;
           if (userName) {
-            nextStep();
+            values.userName = userName;
+            values.addressLine2 = addressLine2;
+            values.shippingAddressLine2 = shippingAddressLine2;
+            values.bitcoinWalletCode = bitcoinWalletCode;
+            values.paypalEmail = paypalEmail;
+            nextStep(values, 'profileScreen');
             global.userName = userName;
           } else {
             showMessageonTheScreen('UserName is required');
