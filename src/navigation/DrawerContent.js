@@ -576,6 +576,7 @@ import {
   ImageBackground,
   StatusBar,
   Pressable,
+  ScrollView,
 } from 'react-native';
 import {Drawer} from 'react-native-paper';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
@@ -730,7 +731,8 @@ export function DrawerContent(props) {
   console.log('length', array.length);
 
   return (
-    <View
+    <ScrollView
+      showsVerticalScrollIndicator={false}
       style={[
         styles.mainContainer,
         drawerStatus === 'open' && {width: moderateWidth(85)},
@@ -841,7 +843,7 @@ export function DrawerContent(props) {
           </Drawer.Section>
         </View>
       </DrawerContentScrollView>
-    </View>
+    </ScrollView>
   );
 }
 

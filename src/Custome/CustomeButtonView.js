@@ -14,7 +14,9 @@ const CustomeButtonView = ({
   labels,
   previous,
   next,
-  lastButtonTitle
+  lastButtonTitle,
+  buttonwidth,
+  buttonContainerStyle
 }) => {
   // Common button styles
   const baseButtonProps = {
@@ -34,12 +36,12 @@ const CustomeButtonView = ({
   };
 
   return (
-    <View style={styles.buttonContainer}>
+    <View style={[styles.buttonContainer, buttonContainerStyle]}>
       {previous && (
         <CustomeButton
           {...baseButtonProps}
           buttoncolor={colors.pink}
-          buttonwidth="55%"
+          buttonwidth={buttonwidth ? buttonwidth : '53%'}
           title="Previous"
           iconname={'arrow-left-long'}
           iconcolor={colors.pink}
@@ -54,8 +56,8 @@ const CustomeButtonView = ({
         <CustomeButton
           {...baseButtonProps}
           buttoncolor={colors.theme1}
-          buttonwidth="55%"
-          title={lastButtonTitle ? lastButtonTitle : "Proceed"}
+          buttonwidth={buttonwidth ? buttonwidth : '53%'}
+          title={lastButtonTitle ? lastButtonTitle : 'Proceed'}
           iconname={'arrow-right-long'}
           iconcolor={colors.pink}
           onPress={handleSubmit ? handleSubmit : nextStep}

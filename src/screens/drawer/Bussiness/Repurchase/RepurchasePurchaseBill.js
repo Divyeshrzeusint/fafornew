@@ -11,15 +11,15 @@ import CustomeButtonView from '../../../../Custome/CustomeButtonView';
 import apiRoutes from '../../../../constants/apiRoutes';
 import axiosInstanceForBussiness from '../../../../utils/axiosInstanceForBussiness';
 import showMessageonTheScreen from '../../../../components/showMessageonTheScreen';
-import { Loader } from '../../../../components/Loader';
+import {Loader} from '../../../../components/Loader';
 
 const RepurchasePurchaseBill = () => {
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
   const cartData = global.repurchaseCartData;
   const sendCartData = cartData.map(item => ({
-    id: item.id,
-    price: item.price,
+    product_id: item.id,
+    mrp: item.price,
     qty: item.qty,
   }));
 
@@ -69,7 +69,7 @@ const RepurchasePurchaseBill = () => {
 
   const renderBody = () => {
     return (
-      <ScrollView style={styles.bodyContainer}>
+      <ScrollView style={styles.bodyContainer} showsVerticalScrollIndicator={false}>
         <Pressable
           onPress={() => navigation.openDrawer()}
           style={{marginTop: verticalScale(10)}}>
@@ -130,13 +130,20 @@ const RepurchasePurchaseBill = () => {
             lastButtonTitle={'Payment'}
             previous={true}
             next={true}
+            buttonwidth={scale(130)}
+            buttonContainerStyle={{marginHorizontal: scale(30)}}
           />
         </View>
       </ScrollView>
     );
   };
 
-  return <View style={styles.container}>{renderBody()}{isLoading && <Loader/>}</View>;
+  return (
+    <View style={styles.container}>
+      {renderBody()}
+      {isLoading && <Loader />}
+    </View>
+  );
 };
 
 export default RepurchasePurchaseBill;

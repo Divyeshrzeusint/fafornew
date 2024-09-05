@@ -18,12 +18,14 @@ const UpgradePackageSelection = ({
   currentPosition,
   labels,
   setVisible,
+  previousData,
 }) => {
   const [selectedPackage, setSelectedPackage] = useState(null);
   const [packageData, setPackageData] = useState([]);
 
   useEffect(() => {
     getPackageData();
+    setSelectedPackage(previousData);
   }, []);
 
   // =================================== Api ================================== //
@@ -48,7 +50,7 @@ const UpgradePackageSelection = ({
 
   const next = () => {
     if (selectedPackage) {
-      nextStep();
+      nextStep(selectedPackage, 'packageSelection');
       global.upgradePackageId = setSelectedPackage;
     } else {
       showMessageonTheScreen('Please select the package');
@@ -58,6 +60,7 @@ const UpgradePackageSelection = ({
   const renderCard = useCallback(
     ({item, index}) => (
       <View style={styles.cardView}>
+        {console.log('image',item?.package_img)}
         <CustomeCards
           key={index}
           item={item}
@@ -97,17 +100,15 @@ const UpgradePackageSelection = ({
             labels={labels}
             previous={true}
             next={true}
+            buttonwidth={scale(130)}
+            buttonContainerStyle={{marginHorizontal:scale(30)}}
           />
         </View>
       </View>
     );
   };
 
-  return (
-    <View>
-      {renderBody()}
-    </View>
-  );
+  return <View>{renderBody()}</View>;
 };
 
 export default UpgradePackageSelection;
@@ -146,7 +147,7 @@ const styles = StyleSheet.create({
     paddingTop: verticalScale(10),
   },
   buttonView: {
-    marginTop: verticalScale(149),
+    marginTop: verticalScale(125),
     marginBottom: verticalScale(30),
     marginHorizontal: scale(10),
   },
