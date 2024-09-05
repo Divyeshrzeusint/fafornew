@@ -111,7 +111,7 @@ const CustomeInputField = ({
           keyboardType={keyboardType}
           editable={editable}
           textAlignVertical={textAlignVertical}
-          textAlign={textAlign}
+          // textAlign={textAlign}
           multiline={multiline}
           numberOfLines={numberOfLines}
           onBlur={onBlur}
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     paddingLeft: scale(5),
     paddingBottom: verticalScale(2),
     fontFamily: 'Montserrat-Regular',
-    textAlign: 'center',
+    // textAlign: 'center',
   },
   viewError: {
     marginVertical: verticalScale(2),

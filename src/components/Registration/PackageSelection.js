@@ -181,6 +181,8 @@ const PackageSelection = ({
             labels={labels}
             previous={true}
             next={true}
+            buttonwidth={scale(130)}
+            buttonContainerStyle={{marginHorizontal: scale(30)}}
           />
         </View>
 

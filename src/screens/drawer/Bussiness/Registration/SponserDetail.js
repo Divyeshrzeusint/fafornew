@@ -161,7 +161,6 @@ const SponserDetail = () => {
               placeholder={'Sponsor ID'}
               // onChangeText={setSponsorId}
               value={sponsorId}
-              // onBlur={handleBlur}
               borderColor={colors.black}
               borderWidth={scale(1)}
               borderRadius={scale(10)}
@@ -173,6 +172,7 @@ const SponserDetail = () => {
               inputWidth={'100%'}
               aliginCenter={true}
               textAlign={'center'}
+              textInputStyle={styles.textInputStyle}
               fontFamily={Montserrat.SemiBold}
             />
             <CustomeInputField
@@ -191,6 +191,7 @@ const SponserDetail = () => {
               aliginCenter={true}
               textAlign={'center'}
               marginTop={verticalScale(5)}
+              textInputStyle={styles.textInputStyle}
               fontFamily={Montserrat.SemiBold}
             />
           </View>
@@ -213,7 +214,7 @@ const SponserDetail = () => {
               color={colors.black}
               inputWidth={'100%'}
               aliginCenter={true}
-              textAlign={'center'}
+              textInputStyle={styles.textInputStyle}
               fontFamily={Montserrat.SemiBold}
             />
             <CustomeButton
@@ -250,6 +251,7 @@ const SponserDetail = () => {
               inputWidth={'100%'}
               aliginCenter={true}
               textAlign={'center'}
+              textInputStyle={styles.textInputStyle}
               fontFamily={Montserrat.SemiBold}
             />
           </View>
@@ -397,4 +399,5 @@ const styles = StyleSheet.create({
     fontFamily: Montserrat.Medium,
     fontSize: scale(10.5),
   },
+  textInputStyle:{paddingLeft:scale(10)}
 });

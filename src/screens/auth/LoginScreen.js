@@ -279,7 +279,7 @@ const LoginScreen = ({navigation}) => {
                 iconLeft={true}
                 iconColor={colors.grey}
                 iconName={'user-large'}
-                iconSize={scale(25)}
+                iconSize={scale(20)}
                 errors={userIdError}
                 touched={userIdError}
               />
@@ -301,19 +301,18 @@ const LoginScreen = ({navigation}) => {
                 color={colors.black}
                 inputWidth={'100%'}
                 aliginCenter={true}
-                textAlign={'center'}
                 fontFamily={Montserrat.SemiBold}
                 IconComponentName={Icon}
                 iconLeft={true}
                 iconColor={colors.grey}
                 iconName={'key-outline'}
-                iconSize={scale(25)}
+                iconSize={scale(20)}
                 errors={passwordError}
                 touched={passwordError}
               />
               <CustomeButton
                 buttoncolor={colors.theme1}
-                buttonwidth="70%"
+                buttonwidth="65%"
                 buttonheight={verticalScale(30)}
                 borderRadius={scale(5)}
                 title="Sign In"
@@ -321,7 +320,6 @@ const LoginScreen = ({navigation}) => {
                 fontSize={scale(16)}
                 fontFamily={Montserrat.SemiBold}
                 elevation={scale(10)}
-                alignSelf="center"
                 marginBottom={verticalScale(10)}
                 iconRight={true}
                 IconComponentName={FontAwesome6}
@@ -330,6 +328,7 @@ const LoginScreen = ({navigation}) => {
                 iconcolor={colors.theme1}
                 iconViewLeft={scale(25)}
                 onPress={handleSubmitPress}
+                alignSelf={'center'}
               />
             </View>
             <TouchableOpacity
@@ -386,8 +385,8 @@ const styles = StyleSheet.create({
   textInputStyle: {
     paddingBottom: verticalScale(8),
     fontSize: moderateScale(16),
-    marginLeft: scale(-25),
-    paddingLeft: scale(-25),
+    // marginLeft: scale(25),
+    paddingLeft: scale(10),
   },
   forgetPasswordText: {
     marginTop: moderateHeight(2.5),
