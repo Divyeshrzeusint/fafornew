@@ -74,7 +74,7 @@ const RegistrationScreen = () => {
             nextStep={nextStep}
             currentPosition={currentPosition}
             labels={labels}
-            data={countrySelectionData}
+            previousData={countrySelectionData}
           />
         );
       case 1:
@@ -84,7 +84,7 @@ const RegistrationScreen = () => {
             nextStep={nextStep}
             currentPosition={currentPosition}
             labels={labels}
-            data={countrySelectionData}
+            // data={countrySelectionData}
             previousData={profileData}
           />
         );
@@ -95,7 +95,7 @@ const RegistrationScreen = () => {
             nextStep={nextStep}
             currentPosition={currentPosition}
             labels={labels}
-            data={profileData}
+            // data={profileData}
             previousData={selectedPackage}
           />
         );

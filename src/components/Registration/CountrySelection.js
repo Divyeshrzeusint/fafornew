@@ -20,7 +20,7 @@ const CountrySelection = ({
   nextStep,
   currentPosition,
   labels,
-  data,
+  previousData,
 }) => {
   const navigation = useNavigation();
   const route = useRoute();
@@ -38,24 +38,24 @@ const CountrySelection = ({
     if (country) {
       getCountryFlag();
       getRegionData();
-      country !== data?.country && setRegion('');
+      country !== previousData?.country && setRegion('');
     }
   }, [country]);
 
   useEffect(() => {
     if (region) {
       getAgencyData();
-      region !== data?.region && setAgency('');
+      region !== previousData?.region && setAgency('');
     }
   }, [region]);
 
   useEffect(() => {
-    if (data) {
-      setCountry(data?.country);
-      setRegion(data?.region);
-      setAgency(data?.agency);
+    if (previousData) {
+      setCountry(previousData?.country);
+      setRegion(previousData?.region);
+      setAgency(previousData?.agency);
     }
-  }, [data]);
+  }, [previousData]);
 
   // ==================================== Api ================================== //
 
@@ -220,7 +220,7 @@ const CountrySelection = ({
             <CustomeButton
               buttonheight={verticalScale(30)}
               buttoncolor={colors.pink}
-              buttonwidth="45%"
+              buttonwidth="47%"
               title="Previous"
               borderRadius={scale(5)}
               fontcolor={colors.white}

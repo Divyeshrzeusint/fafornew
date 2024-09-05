@@ -30,6 +30,7 @@ const CustomeButtonView = ({
     iconRight: true,
     IconComponentName: FontAwesome6,
     iconsize: scale(17),
+    // paddingHorizontal: scale(10)
   };
 
   return (
@@ -38,7 +39,7 @@ const CustomeButtonView = ({
         <CustomeButton
           {...baseButtonProps}
           buttoncolor={colors.pink}
-          buttonwidth="52%"
+          buttonwidth="55%"
           title="Previous"
           iconname={'arrow-left-long'}
           iconcolor={colors.pink}
@@ -53,7 +54,7 @@ const CustomeButtonView = ({
         <CustomeButton
           {...baseButtonProps}
           buttoncolor={colors.theme1}
-          buttonwidth="52%"
+          buttonwidth="55%"
           title={lastButtonTitle ? lastButtonTitle : "Proceed"}
           iconname={'arrow-right-long'}
           iconcolor={colors.pink}
