@@ -50,9 +50,13 @@ const customStyles = {
 const UpgradeSelection = () => {
   const navigation = useNavigation();
   const [currentPosition, setCurrentPosition] = useState(0);
-  const [visible, setVisible] = useState();
+  const [visible, setVisible] = useState(false);
+  const [rigionSelectionData, setRegionSelectionData] = useState({});
+  const [selectedPackage, setSelectedPackage] = useState();
 
-  const nextStep = () => {
+  const nextStep = (data, screen) => {
+    screen == 'upgradeRegionSelection' && setRegionSelectionData(data);
+    screen == 'packageSelection' && setSelectedPackage(data);
     setCurrentPosition(prevPosition =>
       prevPosition < labels.length - 1 ? prevPosition + 1 : prevPosition,
     );
@@ -112,6 +116,7 @@ const UpgradeSelection = () => {
               currentPosition={currentPosition}
               labels={labels}
               setVisible={setVisible}
+              previousData={rigionSelectionData}
             />
           </View>
         );
@@ -124,6 +129,7 @@ const UpgradeSelection = () => {
               currentPosition={currentPosition}
               labels={labels}
               setVisible={setVisible}
+              previousData={selectedPackage}
             />
           </View>
         );

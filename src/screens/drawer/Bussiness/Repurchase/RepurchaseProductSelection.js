@@ -286,9 +286,11 @@ const RepurchaseProductSelection = () => {
           previousStep={previousStep}
           nextStep={nextStep}
           currentPosition={''}
+          buttonwidth={scale(130)}
           labels={''}
           previous={true}
           next={true}
+          buttonContainerStyle={{marginHorizontal:scale(30)}}
         />
       </View>
     </View>

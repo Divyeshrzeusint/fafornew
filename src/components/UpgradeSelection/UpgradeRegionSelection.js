@@ -5,28 +5,10 @@ import {scale, verticalScale} from '../../utils/responsive';
 import {Montserrat} from '../../themes/fonts';
 import CustomDropDown from '../CustomDropDown';
 import Entypo from 'react-native-vector-icons/Entypo';
-import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import CustomeButtonView from '../../Custome/CustomeButtonView';
-import CustomeButton from '../../Custome/CustomeButton';
 import axiosInstanceForBussiness from '../../utils/axiosInstanceForBussiness';
 import apiRoutes from '../../constants/apiRoutes';
 import showMessageonTheScreen from '../showMessageonTheScreen';
-
-const regionData = [
-  {title: 'region1'},
-  {title: 'region2'},
-  {title: 'region3'},
-  {title: 'region4'},
-  {title: 'region5'},
-];
-
-const agencyData = [
-  {title: 'agency1'},
-  {title: 'agency2'},
-  {title: 'agency3'},
-  {title: 'agency4'},
-  {title: 'agency5'},
-];
 
 const UpgradeRegionSelection = ({
   previousStep,
@@ -34,6 +16,7 @@ const UpgradeRegionSelection = ({
   currentPosition,
   labels,
   setVisible,
+  previousData,
 }) => {
   const [regionData, setRegionData] = useState([]);
   const [region, setRegion] = useState('');
@@ -47,8 +30,16 @@ const UpgradeRegionSelection = ({
   useEffect(() => {
     if (region) {
       getAgencyData();
+      region !== previousData?.region && setAgency('')
     }
   }, [region]);
+
+  useEffect(() => {
+    if (previousData) {
+      setRegion(previousData.region);
+      setAgency(previousData.agency);
+    }
+  }, [previousData]);
 
   // ========================================= Api ====================================== //
 
@@ -80,7 +71,11 @@ const UpgradeRegionSelection = ({
 
   const next = () => {
     if ((region, agency)) {
-      nextStep();
+      const data = {
+        region: region,
+        agency: agency,
+      };
+      nextStep(data, 'upgradeRegionSelection');
       global.upgradeRegion = region.region_id;
       global.upgradeAgencyCode = agency.agency_code;
     } else {

@@ -1,4 +1,4 @@
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useState, useMemo, useEffect} from 'react';
 import colors from '../../../../themes/colors';
 import {Montserrat} from '../../../../themes/fonts';
@@ -24,6 +24,7 @@ const RegionSelection = () => {
   const [region, setRegion] = useState('');
   const [agencyData, setAgencyData] = useState('');
   const [agency, setAgency] = useState('');
+  console.log('region', region);
 
   useEffect(() => {
     getContryData();
@@ -33,12 +34,14 @@ const RegionSelection = () => {
     if (country) {
       getContryFlag();
       getRegionData();
+      setRegion('');
     }
   }, [country]);
 
   useEffect(() => {
     if (region) {
       getAgencyData();
+      setAgency('');
     }
   }, [region]);
 
@@ -99,13 +102,19 @@ const RegionSelection = () => {
   };
 
   const nextStep = () => {
-    if ((country, region, agency)) {
+    if (country && region && agency) {
       global.repurchaseAgencyCode = agency?.agency_code;
       navigation.navigate(screens.repurchaseProductSelection);
     } else {
-      !country && showMessageonTheScreen('please select the country');
-      !region && showMessageonTheScreen('please select the region');
-      !agency && showMessageonTheScreen('please select the agency');
+      if (!country) {
+        showMessageonTheScreen('Please select the country');
+      }
+      if (!region) {
+        showMessageonTheScreen('Please select the region');
+      }
+      if (!agency) {
+        showMessageonTheScreen('Please select the agency');
+      }
     }
   };
 
@@ -142,49 +151,28 @@ const RegionSelection = () => {
       <Pressable onPress={() => navigation.openDrawer()}>
         <Feather name="menu" size={scale(25)} color={colors.black} />
       </Pressable>
-      <View style={styles.headerContainer}>
-        <Text style={styles.title}>To Proceed</Text>
-        <Text style={styles.subtitle}>Kindly Fill the Imformation Below</Text>
-      </View>
-      <Text style={[styles.title, styles.heading, {paddingLeft: scale(20)}]}>
-        Choose your country
-      </Text>
-      <View style={styles.dropdownContainer}>{memoizedDropdown}</View>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.title}>To Proceed</Text>
+          <Text style={styles.subtitle}>Kindly Fill the Imformation Below</Text>
+        </View>
+        <Text style={[styles.title, styles.heading, {paddingLeft: scale(20)}]}>
+          Choose your country
+        </Text>
+        <View style={styles.dropdownContainer}>{memoizedDropdown}</View>
 
-      <View style={[styles.dropdownContainer, {marginTop: verticalScale(15)}]}>
-        <Text style={[styles.title, styles.heading]}>Select Region</Text>
-        <CustomDropDown
-          placeholder="Select Region"
-          data={regionData}
-          onSelect={setRegion}
-          selected={region?.regions_name}
-          labelKey={'regions_name'}
-          buttonStyle={styles.dropdownButtonStyle}
-          buttonTextStyle={styles.dropdownButtonText}
-          arrowStyle={styles.dropdownArrow}
-          menuStyle={styles.dropdownMenu}
-          itemStyle={styles.dropdownItem}
-          selectedItemStyle={styles.selectedItem}
-          placeholderStyle={[styles.placeholder, styles.placeholderOffset]}
-          textAlign={'center'}
-          Icon={Entypo}
-          leftIcon={'location'}
-          leftIconStyle={styles.dropdownLeftIcon}
-          validationMessage={
-            country
-              ? 'Region data not available for this country'
-              : 'please select the country'
-          }
-        />
-
-        <View style={{marginTop: verticalScale(15)}}>
-          <Text style={[styles.title, styles.heading]}>Collection Center</Text>
+        <View
+          style={[
+            styles.dropdownContainer,
+            {marginTop: verticalScale(15), marginBottom: verticalScale(10)},
+          ]}>
+          <Text style={[styles.title, styles.heading]}>Select Region</Text>
           <CustomDropDown
-            placeholder="Select Agency"
-            data={agencyData}
-            onSelect={setAgency}
-            selected={agency.agency_name}
-            labelKey={'agency_name'}
+            placeholder="Select Region"
+            data={regionData}
+            onSelect={setRegion}
+            selected={region?.regions_name}
+            labelKey={'regions_name'}
             buttonStyle={styles.dropdownButtonStyle}
             buttonTextStyle={styles.dropdownButtonText}
             arrowStyle={styles.dropdownArrow}
@@ -194,38 +182,67 @@ const RegionSelection = () => {
             placeholderStyle={[styles.placeholder, styles.placeholderOffset]}
             textAlign={'center'}
             Icon={Entypo}
-            leftIcon={'location-pin'}
+            leftIcon={'location'}
             leftIconStyle={styles.dropdownLeftIcon}
             validationMessage={
-              region
-                ? 'Agency data not available for this region'
-                : 'please select the region'
+              country
+                ? 'Region data not available for this country'
+                : 'please select the country'
             }
           />
 
-          <View style={styles.infoContainer}>
-            <Text style={styles.infoText}>
-              - Present the "self Collection" To our center for product
-              redemption
+          <View style={{marginTop: verticalScale(15)}}>
+            <Text style={[styles.title, styles.heading]}>
+              Collection Center
             </Text>
-            <Text style={[styles.infoText, styles.infoTextPadding]}>
-              - This code will be sent to your assigned Email or Login
-              Backoffice to Retrieve
-            </Text>
-          </View>
-
-          <View style={styles.buttonView}>
-            <CustomeButtonView
-              previousStep={previousStep}
-              nextStep={nextStep}
-              currentPosition={''}
-              labels={''}
-              previous={true}
-              next={true}
+            <CustomDropDown
+              placeholder="Select Agency"
+              data={agencyData}
+              onSelect={setAgency}
+              selected={agency.agency_name}
+              labelKey={'agency_name'}
+              buttonStyle={styles.dropdownButtonStyle}
+              buttonTextStyle={styles.dropdownButtonText}
+              arrowStyle={styles.dropdownArrow}
+              menuStyle={styles.dropdownMenu}
+              itemStyle={styles.dropdownItem}
+              selectedItemStyle={styles.selectedItem}
+              placeholderStyle={[styles.placeholder, styles.placeholderOffset]}
+              textAlign={'center'}
+              Icon={Entypo}
+              leftIcon={'location-pin'}
+              leftIconStyle={styles.dropdownLeftIcon}
+              validationMessage={
+                region
+                  ? 'Agency data not available for this region'
+                  : 'please select the region'
+              }
             />
+
+            <View style={styles.infoContainer}>
+              <Text style={styles.infoText}>
+                - Present the "self Collection" To our center for product
+                redemption
+              </Text>
+              <Text style={[styles.infoText, styles.infoTextPadding]}>
+                - This code will be sent to your assigned Email or Login
+                Backoffice to Retrieve
+              </Text>
+            </View>
+
+            <View style={styles.buttonView}>
+              <CustomeButtonView
+                previousStep={previousStep}
+                nextStep={nextStep}
+                currentPosition={''}
+                labels={''}
+                previous={true}
+                next={true}
+              />
+            </View>
           </View>
         </View>
-      </View>
+      </ScrollView>
     </View>
   );
 
@@ -237,6 +254,7 @@ export default RegionSelection;
 const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: colors.screenColor},
   bodyContainer: {
+    flex: 1,
     margin: scale(15),
     marginTop: verticalScale(30),
   },
@@ -259,6 +277,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: scale(20),
     marginTop: verticalScale(8),
     borderRadius: scale(10),
+    marginHorizontal: scale(5),
   },
   buttonContainer: {
     flexDirection: 'row',
