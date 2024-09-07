@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
   name: {width: moderateWidth(40)},
   profileFooter: {
     flexDirection: 'row',
-    marginTop:verticalScale(14),
+    marginTop: moderateHeight(3.2),
     justifyContent: 'space-between',
   },
   chip: {
