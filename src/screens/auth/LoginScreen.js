@@ -310,6 +310,7 @@ const LoginScreen = ({navigation}) => {
                 iconSize={scale(25)}
                 errors={passwordError}
                 touched={passwordError}
+                secureTextEntry={true}
               />
               <CustomeButton
                 buttoncolor={colors.theme1}

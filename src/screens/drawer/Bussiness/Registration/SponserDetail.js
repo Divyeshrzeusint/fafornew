@@ -237,8 +237,9 @@ const SponserDetail = () => {
             />
             <CustomeInputField
               placeholder={'Placement Name'}
-              onChangeText={setPlacementName}
+              // onChangeText={setPlacementName}
               value={placementName}
+              editable={false}
               borderColor={colors.black}
               borderWidth={scale(1)}
               borderRadius={scale(10)}
