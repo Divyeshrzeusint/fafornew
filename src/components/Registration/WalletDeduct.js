@@ -15,7 +15,7 @@ import {Loader} from '../Loader';
 import { useNavigation } from '@react-navigation/native';
 import screens from '../../constants/screens';
 
-const walletData = [{title: 'wallet'}];
+const walletData = [{title: 'Wallet'}];
 
 const TransactionIDData = [
   {title: 'TransactionID1'},
@@ -29,6 +29,8 @@ const WalletDeduct = ({previousStep, nextStep, currentPosition, labels}) => {
   const [selectedWallet, setSelectedWallet] = useState('');
   const [wallet, setWallet] = useState('');
   const [transaction, setTransaction] = useState('');
+  const [errors, setErrors] = useState('');
+  const [isValid, setIsValid] = useState(false);
   const [visible, setVisible] = useState(false);
 
   // ==================================== Api ===================================== //
@@ -40,7 +42,13 @@ const WalletDeduct = ({previousStep, nextStep, currentPosition, labels}) => {
         `${apiRoutes.businessRegistration}/${apiRoutes.checkTransactionPass}`,
         {self_id: global?.userData.self_id, txn_pass: transaction},
       );
-      console.log('response?.data', response?.data);
+      if (Number(response?.data?.status) === 400) {
+        setTransaction('')
+        setErrors(response?.data?.msg)
+      } else {
+        setErrors('');
+        setIsValid(true);
+      }
       showMessageonTheScreen(response?.data?.msg);
     } catch (error) {
       console.error('Error making POST request:', error);
@@ -50,38 +58,6 @@ const WalletDeduct = ({previousStep, nextStep, currentPosition, labels}) => {
   };
 
   const registerUser = async () => {
-    // console.log('package_id:', global?.selectedPackage);
-    // console.log('sponser_id:', global.sponsorId);
-    // console.log('placement_id:', global.placementId);
-    // console.log('position:', global.position);
-    // console.log('country:', global.countryId);
-    // console.log('region_id:', global.regionId);
-    // console.log('self_col:', global.agency);
-    // console.log('username:', global.userName);
-    // console.log('name:', global.name);
-    // console.log('gender:', global.gender);
-    // console.log('dob:', global.dateOfBirth);
-    // console.log('pass:', global.password);
-    // console.log('cpass:', global.confirmPassword);
-    // console.log('email:', global.email);
-    // console.log('mob:', global.mobileNo);
-    // console.log('address_1:', global.addressLine1);
-    // console.log('address_2:', global.addressLine2);
-    // console.log('state:', global.state);
-    // console.log('city:', global.city);
-    // console.log('saddress_1:', global.shippingAddressLine1);
-    // console.log('saddress_2:', global.shippingAddressLine2);
-    // console.log('sstate:', global.shippingState);
-    // console.log('scity:', global.shippingCity);
-    // console.log('acname:', global.accountName);
-    // console.log('bname:', global.bankName);
-    // console.log('branch:', global.branchName);
-    // console.log('account_no:', global.accountNumber);
-    // console.log('ifsc:', global.ifscCode);
-    // console.log('bitcoin_wallet_code:', global.bitcoinWalletCode);
-    // console.log('paypal_email:', global.paypalEmail);
-    // console.log('txn_pass:', transaction);
-    // console.log('cart_items:', global.cartData);
     try {
       setVisible(true);
       const response = await axiosInstanceForBussiness.post(
@@ -117,10 +93,44 @@ const WalletDeduct = ({previousStep, nextStep, currentPosition, labels}) => {
           ifsc: global.ifscCode,
           bitcoin_wallet_code: global.bitcoinWalletCode,
           paypal_email: global.paypalEmail,
-          txn_pass: transaction,
+          txn_pass: Number(transaction),
           cart_items: global.cartData,
         },
       );
+      const registerObject = {
+        package_id: global?.selectedPackage,
+        sponser_id: global.sponsorId,
+        placement_id: global.placementId,
+        position: global.position,
+        country: global.countryId,
+        region_id: global.regionId,
+        self_col: global.agency,
+        username: global.userName,
+        name: global.name,
+        gender: global.gender,
+        dob: global.dateOfBirth,
+        pass: global.password,
+        cpass: global.confirmPassword,
+        email: global.email,
+        mob: global.mobileNo,
+        address_1: global.addressLine1,
+        address_2: global.addressLine2,
+        state: global.state,
+        city: global.city,
+        saddress_1: global.shippingAddressLine1,
+        saddress_2: global.shippingAddressLine2,
+        sstate: global.shippingState,
+        scity: global.shippingCity,
+        acname: global.accountName,
+        bname: global.bankName,
+        branch: global.branchName,
+        account_no: global.accountNumber,
+        ifsc: global.ifscCode,
+        bitcoin_wallet_code: global.bitcoinWalletCode,
+        paypal_email: global.paypalEmail,
+        txn_pass: Number(transaction),
+        cart_items: global.cartData,
+      }
       showMessageonTheScreen(response?.data?.msg);
       if(response?.data?.status == 200){
         navigation.navigate(screens.registrationPaymentSuccess)
@@ -186,6 +196,8 @@ const WalletDeduct = ({previousStep, nextStep, currentPosition, labels}) => {
               marginTop={verticalScale(15)}
               inputWidth={'90%'}
               textInputStyle={{paddingBottom: verticalScale(8)}}
+              errors={errors}
+              touched={errors}
             />
 
             <CustomeButton
@@ -231,6 +243,11 @@ const WalletDeduct = ({previousStep, nextStep, currentPosition, labels}) => {
             <CustomeButtonView
               previousStep={previousStep}
               nextStep={next}
+              // nextStep={
+              //   isValid
+              //     ? next()
+              //     : showMessageonTheScreen('Verify upline transaction Id')
+              // }
               currentPosition={currentPosition}
               labels={labels}
               previous={true}
@@ -307,7 +324,7 @@ const styles = StyleSheet.create({
     color: colors.black,
   },
   dropdownMenu: {
-    backgroundColor: colors.lightBlue,
+    // backgroundColor: colors.lightBlue,
   },
   dropdownItem: {
     paddingVertical: verticalScale(10),

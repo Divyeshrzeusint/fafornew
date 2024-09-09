@@ -225,7 +225,7 @@ const RepurchaseProductSelection = () => {
             buttonwidth="75%"
             buttonheight={verticalScale(30)}
             borderRadius={scale(5)}
-            title={item?.inCart ? 'remove cart' : 'Add to Cart'}
+            title={item?.inCart ? 'Remove cart' : 'Add to Cart'}
             fontcolor={colors.white}
             fontSize={scale(9)}
             fontFamily={Montserrat.SemiBold}

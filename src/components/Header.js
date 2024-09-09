@@ -4,7 +4,7 @@ import AppText from './AppText';
 import {Montserrat} from '../themes/fonts';
 import colors from '../themes/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {moderateScale} from '../utils/responsive';
+import {moderateScale, scale, verticalScale} from '../utils/responsive';
 import strings from '../constants/strings';
 
 const Header = ({title, rightBgColor, hideAction}) => {
@@ -52,10 +52,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   rightButton: {
+    height: verticalScale(50),
+    width: scale(50),
     alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: colors.darkBlue,
-    padding: moderateScale(12),
-    borderRadius: moderateScale(100),
+    // padding: moderateScale(12),
+    borderRadius: scale(25),
     elevation: 5,
   },
 });

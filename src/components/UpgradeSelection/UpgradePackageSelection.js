@@ -35,9 +35,8 @@ const UpgradePackageSelection = ({
       setVisible(true);
       const response = await axiosInstanceForBussiness.post(
         `${apiRoutes.businessUpgrade}/${apiRoutes.upgradePackage}`,
-        {package_id: ''},
+        {package_id: '3'},
       );
-      console.log('response?.data', response?.data);
       setPackageData(response?.data?.package);
     } catch (error) {
       console.error('Error making POST request:', error);
@@ -60,7 +59,6 @@ const UpgradePackageSelection = ({
   const renderCard = useCallback(
     ({item, index}) => (
       <View style={styles.cardView}>
-        {console.log('image',item?.package_img)}
         <CustomeCards
           key={index}
           item={item}

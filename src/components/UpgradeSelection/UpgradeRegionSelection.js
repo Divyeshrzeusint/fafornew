@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
     color: colors.black,
   },
   dropdownMenu: {
-    backgroundColor: colors.lightBlue,
+    // backgroundColor: colors.lightBlue,
   },
   dropdownItem: {
     paddingVertical: verticalScale(10),

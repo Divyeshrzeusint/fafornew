@@ -4,6 +4,7 @@ import React, {useEffect, useState} from 'react';
 import {
   Alert,
   ImageBackground,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
@@ -22,12 +23,12 @@ import {
   getUserDetailsClear,
 } from '../../redux/slices/getUserDetails';
 import colors from '../../themes/colors';
-import globalStyles from '../../themes/globalStyles';
-import images from '../../themes/images';
 import {
   moderateHeight,
   moderateScale,
   moderateWidth,
+  scale,
+  verticalScale,
 } from '../../utils/responsive';
 
 const DashboardScreen = ({navigation}) => {
@@ -54,20 +55,23 @@ const DashboardScreen = ({navigation}) => {
   }, [userDetails]);
 
   return (
-    <ImageBackground source={images.dashboardBg} style={styles.mainContainer}>
+    <View style={styles.mainContainer}>
       <TouchableOpacity
         style={styles.menuContainer}
         onPress={() => navigation?.toggleDrawer()}>
         <SimpleIcon name={'menu'} size={25} color={colors.white} />
       </TouchableOpacity>
-
+      <View style={styles.headercontainer}></View>
+      <View style={styles.dashboardProfileContainer}>
+        <DashboardProfile data={userData} />
+      </View>
       {!userDetails?.isLoading ? (
-        <View>
-          <DashboardProfile data={userData} />
+        <SafeAreaView style={styles.innerWrapper}>
           <ScrollView
             showsVerticalScrollIndicator={false}
             style={styles.innerContainer}
-            contentContainerStyle={styles.contentContainerStyle}>
+            // contentContainerStyle={styles.contentContainerStyle}
+          >
             <View style={styles.mainSection}>
               <View style={styles.row}>
                 <DashboardCard
@@ -153,19 +157,27 @@ const DashboardScreen = ({navigation}) => {
               </View>
             </View>
           </ScrollView>
-        </View>
+        </SafeAreaView>
       ) : (
         <Loader />
       )}
-    </ImageBackground>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   mainContainer: {flex: 1},
+  headercontainer: {
+    backgroundColor: 'red',
+    height: verticalScale(240),
+    borderBottomLeftRadius: scale(50),
+    borderBottomRightRadius: scale(50),
+  },
   menuContainer: {
-    marginTop: globalStyles.statusBarMargin,
-    marginLeft: moderateWidth(5),
+    position: 'absolute',
+    top: verticalScale(30),
+    left: scale(20),
+    zIndex: 1
   },
   row: {
     flexDirection: 'row',
@@ -180,6 +192,14 @@ const styles = StyleSheet.create({
     marginTop: moderateHeight(2),
     paddingHorizontal: moderateWidth(5),
   },
+  dashboardProfileContainer: {
+    position: 'absolute', 
+    top: scale(100)
+  },
+  innerWrapper: {
+    flex: 1, 
+    marginTop: scale(80)
+  }
 });
 
 export default DashboardScreen;

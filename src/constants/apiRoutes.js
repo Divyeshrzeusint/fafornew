@@ -1,7 +1,8 @@
 export default {
   baseUrl: 'https://robinjoseph.org/app/api/',
   loginUrl: 'https://faforlifebusiness.com/app/api/',
-  baseUrlForBusiness: 'https://robinjoseph.org/app/',
+  // baseUrlForBusiness: 'https://robinjoseph.org/app/',
+  baseUrlForBusiness: 'https://robinjoseph.org/fafor3.0/app/',
 
   login: 'login', // Done
   getUserDetails: 'getUserDetailBySelfId', // Done

@@ -35,10 +35,9 @@ const ProfileCreation = ({
   labels,
   previousData,
 }) => {
-  console.log('previousData', previousData);
   const [visible, setVisible] = useState(false);
   const [userName, setUserName] = useState('');
-  const [userNameStatus, setUserNameStatus] = useState('');
+  const [userNameStatus, setUserNameStatus] = useState();
   const [selectedGender, setSelectedGender] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
   const [addressLine2, setAddressLine2] = useState('');
@@ -66,7 +65,6 @@ const ProfileCreation = ({
   const getInitialProfileData = async () => {
     try {
       const data = await AsyncStorage.getItem('profileData');
-      console.log('data', data);
       setInitialData(JSON.parse(data));
     } catch (error) {
       console.log('error in get stored data', error);
@@ -84,7 +82,10 @@ const ProfileCreation = ({
           username: userName,
         },
       );
-      setUserNameStatus(response.data.status);
+      if (Number(response.data.status) === 400) {
+        setUserName('');
+      }
+      setUserNameStatus(Number(response.data.status));
     } catch (error) {
       console.error('Error making POST request:', error);
     } finally {
@@ -117,11 +118,11 @@ const ProfileCreation = ({
     dateOfBirth: yup.date().required('Date of Birth is required').nullable(),
     password: yup
       .string()
-      .min(8, 'Password must be at least 8 characters')
-      .matches(
-        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{8,}$/,
-        'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character',
-      )
+      .min(6, 'Password must be at least 6 characters')
+      // .matches(
+      //   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{8,}$/,
+      //   'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character',
+      // )
       .required('Password is required'),
     confirmPassword: yup
       .string()
@@ -133,7 +134,7 @@ const ProfileCreation = ({
       .required('Email is required'),
     mobileNo: yup
       .string()
-      .matches(/^[0-9]{10}$/, 'Mobile number must be exactly 10 digits')
+      // .matches(/^[0-9]{10}$/, 'Mobile number must be exactly 10 digits')
       .required('Mobile number is required'),
     addressLine1: yup.string().required('Address Line 1 is required'),
     city: yup.string().required('City is required'),
@@ -145,21 +146,25 @@ const ProfileCreation = ({
     shippingState: yup.string().required('Shipping State is required'),
     ifscCode: yup
       .string()
-      .matches(/^[A-Z]{4}0[A-Z0-9]{6}$/, 'Invalid IFSC Code')
+      // .matches(/^[A-Z]{4}0[A-Z0-9]{6}$/, 'Invalid IFSC Code')
       .required('IFSC Code is required'),
     bankName: yup.string().required('Bank Name is required'),
     branchName: yup.string().required('Branch Name is required'),
     accountNumber: yup
       .string()
-      .matches(/^[0-9]{9,18}$/, 'Account Number must be 9 to 18 digits')
+      // .matches(/^[0-9]{9,18}$/, 'Account Number must be 9 to 18 digits')
       .required('Account Number is required'),
     accountName: yup.string().required('Account Name is required'),
   });
 
-  const handleUserName = useCallback(value => {
-    setUserName(value);
+  // const handleUserName = useCallback(value => {
+  //   setUserName(value);
+  //   checkUserName();
+  // }, []);
+
+  const handleUserName = () => {
     checkUserName();
-  }, []);
+  }
 
   const handleGenderSelect = option => {
     setSelectedGender(option);
@@ -177,7 +182,8 @@ const ProfileCreation = ({
     () => (
       <CustomeInputField
         placeholder={'Enter Username'}
-        onChangeText={handleUserName}
+        onChangeText={setUserName}
+        onBlur={handleUserName}
         value={userName}
         borderColor={colors.theme1}
         borderWidth={scale(1)}
@@ -192,9 +198,11 @@ const ProfileCreation = ({
         aliginCenter={true}
         textAlign={'center'}
         fontFamily={Montserrat.SemiBold}
+        errors={userNameStatus === 400 && 'Username Already Used. Choose Another.'}
+        touched={userNameStatus === 400 && 'Username Already Used. Choose Another.'}
       />
     ),
-    [userName],
+    [userName, userNameStatus],
   );
 
   const renderForm = useCallback(
@@ -525,7 +533,7 @@ const styles = StyleSheet.create({
     color: colors.black,
   },
   dropdownMenu: {
-    backgroundColor: colors.lightBlue,
+    // backgroundColor: colors.lightBlue,
   },
   dropdownItem: {
     paddingVertical: verticalScale(10),

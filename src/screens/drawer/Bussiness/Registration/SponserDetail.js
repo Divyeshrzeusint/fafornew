@@ -25,8 +25,8 @@ import showMessageonTheScreen from '../../../../components/showMessageonTheScree
 import {Loader} from '../../../../components/Loader';
 
 const placementsetting = [
-  {key: 'left', value: 'l'},
-  {key: 'right', value: 'r'},
+  {key: 'Left', value: 'l'},
+  {key: 'Right', value: 'r'},
 ];
 
 const SponserDetail = () => {
@@ -48,7 +48,6 @@ const SponserDetail = () => {
 
   const getSponserData = async () => {
     try {
-      console.log(global.userData)
       setVisible(true);
       const response = await axiosInstanceForBussiness.post(
         `${apiRoutes.businessRegistration}/${apiRoutes.checkSponser}`,
@@ -238,7 +237,7 @@ const SponserDetail = () => {
             />
             <CustomeInputField
               placeholder={'Placement Name'}
-              onChangeText={setPlacementName}
+              // onChangeText={setPlacementName}
               value={placementName}
               borderColor={colors.black}
               borderWidth={scale(1)}
@@ -253,6 +252,7 @@ const SponserDetail = () => {
               textAlign={'center'}
               textInputStyle={styles.textInputStyle}
               fontFamily={Montserrat.SemiBold}
+              editable={false}
             />
           </View>
         </View>
@@ -270,7 +270,7 @@ const SponserDetail = () => {
               buttonStyle={{backgroundColor: colors.screenColor}}
               buttonTextStyle={{color: colors.black}}
               arrowStyle={{color: colors.black}}
-              menuStyle={{backgroundColor: colors.lightBlue}}
+              // menuStyle={{backgroundColor: colors.lightBlue}}
               itemStyle={{paddingVertical: verticalScale(10)}}
               selectedItemStyle={{backgroundColor: colors.screenColor}}
               placeholderStyle={{color: colors.grey}}
