@@ -728,7 +728,6 @@ export function DrawerContent(props) {
   ];
 
   const array = 'data?.name data?.name data?.name';
-  console.log('length', array.length);
 
   return (
     <ScrollView

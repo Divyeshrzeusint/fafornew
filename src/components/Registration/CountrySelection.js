@@ -132,7 +132,7 @@ const CountrySelection = ({
         buttonStyle={styles.dropdownButtonStyle}
         buttonTextStyle={styles.dropdownButtonText}
         arrowStyle={styles.dropdownArrow}
-        menuStyle={styles.dropdownMenu}
+        // menuStyle={styles.dropdownMenu}
         itemStyle={styles.dropdownItem}
         selectedItemStyle={styles.selectedItem}
         placeholderStyle={styles.placeholder}
@@ -164,7 +164,7 @@ const CountrySelection = ({
           buttonStyle={styles.dropdownButtonStyle}
           buttonTextStyle={styles.dropdownButtonText}
           arrowStyle={styles.dropdownArrow}
-          menuStyle={styles.dropdownMenu}
+          // menuStyle={styles.dropdownMenu}
           itemStyle={styles.dropdownItem}
           selectedItemStyle={styles.selectedItem}
           placeholderStyle={[styles.placeholder, styles.placeholderOffset]}
@@ -190,7 +190,7 @@ const CountrySelection = ({
             buttonStyle={styles.dropdownButtonStyle}
             buttonTextStyle={styles.dropdownButtonText}
             arrowStyle={styles.dropdownArrow}
-            menuStyle={styles.dropdownMenu}
+            menuStyle={{...styles.dropdownMenu, height: agencyData?.length > 3 ? verticalScale(180) : 'auto'}}
             itemStyle={styles.dropdownItem}
             selectedItemStyle={styles.selectedItem}
             placeholderStyle={[styles.placeholder, styles.placeholderOffset]}
@@ -325,7 +325,8 @@ const styles = StyleSheet.create({
     color: colors.black,
   },
   dropdownMenu: {
-    backgroundColor: colors.lightBlue,
+    // backgroundColor: colors.lightBlue,
+    // height: verticalScale(180),
   },
   dropdownItem: {
     paddingVertical: verticalScale(10),

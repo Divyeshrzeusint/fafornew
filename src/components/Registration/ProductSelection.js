@@ -213,7 +213,7 @@ const ProductSelection = ({
               buttonwidth={item?.inCart ? '75%' : '75%'}
               buttonheight={verticalScale(30)}
               borderRadius={scale(5)}
-              title={item?.inCart ? 'remove cart' : 'Add to Cart'}
+              title={item?.inCart ? 'Remove cart' : 'Add to Cart'}
               fontcolor={colors.white}
               fontSize={scale(9)}
               fontFamily={Montserrat.SemiBold}
@@ -256,7 +256,7 @@ const ProductSelection = ({
           />
         </View>
         <Text style={styles.limitText}>
-          According to your package your amount limit is 10000.00
+          According to your package your amount limit is {priceLimit}
         </Text>
         <View style={styles.buttonView}>
           <CustomeButtonView

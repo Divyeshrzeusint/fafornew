@@ -115,7 +115,7 @@ const CustomDropDown = ({
         renderButton={renderButton}
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}
-        dropdownStyle={[styles.dropdownMenuStyle, menuStyle]}
+        dropdownStyle={{...styles.dropdownMenuStyle, ...menuStyle}}
         onFocus={handleDropdownPress}
       />
       {errors && touched && (

@@ -230,6 +230,7 @@ const styles = StyleSheet.create({
     width: screenWidth - 50,
     alignItems: 'center',
     marginLeft: scale(10),
+    gap: scale(10)
   },
   imageContainer: {
     padding: scale(10),

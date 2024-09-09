@@ -24,7 +24,6 @@ const RegionSelection = () => {
   const [region, setRegion] = useState('');
   const [agencyData, setAgencyData] = useState('');
   const [agency, setAgency] = useState('');
-  console.log('region', region);
 
   useEffect(() => {
     getContryData();
@@ -313,7 +312,7 @@ const styles = StyleSheet.create({
     color: colors.black,
   },
   dropdownMenu: {
-    backgroundColor: colors.lightBlue,
+    // backgroundColor: colors.lightBlue,
   },
   dropdownItem: {
     paddingVertical: verticalScale(10),
