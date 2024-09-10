@@ -33,6 +33,8 @@ const UpgradeInvoice = ({
   const [wallet, setWallet] = useState('');
   const [transactionID, setTransactionID] = useState('');
   const [transaction, setTransaction] = useState('');
+  const [isValid, setIsValid] = useState(false);
+  const [errors, setErrors] = useState('');
   const cartData = global.upgradeCartData;
   const totalAmount = cartData.reduce((accumulator, item) => {
     return accumulator + parseFloat(item.totalAmount);
@@ -70,6 +72,17 @@ const UpgradeInvoice = ({
 
     try {
       setVisible(true);
+      const dataObject = {
+          user_id: global.userData?.id,
+          region_id: global.upgradeRegion,
+          agency_code: global.upgradeAgencyCode,
+          package_id: global.upgradePackageId,
+          total_payment: totalAmount,
+          upgrade_pv: '10',
+          stockist_country: global.userData?.stockist_country,
+          upgrade_product_cart: sendCartData
+      }
+      console.log('dataObject', dataObject);
       const response = await axiosInstanceForBussiness.post(
         `${apiRoutes.businessUpgrade}/${apiRoutes.upgradePayment}`,
         {
@@ -106,6 +119,13 @@ const UpgradeInvoice = ({
         {self_id: global?.userData.self_id, txn_pass: transaction},
       );
       console.log('response?.data', response?.data);
+      if (Number(response?.data?.status) == 400) {
+        setErrors(response?.data?.msg)
+        setTransaction('');
+      } else {
+        setErrors('');
+        setIsValid(true);
+      }
       showMessageonTheScreen(response?.data?.msg);
     } catch (error) {
       console.error('Error making POST request:', error);
@@ -195,6 +215,8 @@ const UpgradeInvoice = ({
                 paddingBottom: verticalScale(8),
                 paddingLeft: scale(10),
               }}
+              errors={errors}
+              touched={errors}
             />
           </View>
 
@@ -230,7 +252,7 @@ const UpgradeInvoice = ({
           <View style={styles.buttonView}>
             <CustomeButtonView
               previousStep={previousStep}
-              nextStep={upgradePayment}
+              nextStep={isValid && upgradePayment}
               currentPosition={currentPosition}
               labels={labels}
               previous={true}
@@ -313,7 +335,7 @@ const styles = StyleSheet.create({
     color: colors.black,
   },
   dropdownMenu: {
-    backgroundColor: colors.lightBlue,
+    // backgroundColor: colors.lightBlue,
   },
   dropdownItem: {
     paddingVertical: verticalScale(10),

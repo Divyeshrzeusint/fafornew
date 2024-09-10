@@ -31,6 +31,8 @@ const RepurchaseProductSelection = () => {
   const [productData, setProductData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [cart, setCart] = useState([]);
+  
+  console.log('productData', productData[0])
 
   useEffect(() => {
     getProductData();
@@ -218,6 +220,7 @@ const RepurchaseProductSelection = () => {
               item={item}
               quantity={item.quantity}
               type={'repurchase'}
+              uniqueId={'product_id'}
             />
           )}
           <CustomeButton
