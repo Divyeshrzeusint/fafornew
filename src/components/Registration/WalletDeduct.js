@@ -14,6 +14,7 @@ import showMessageonTheScreen from '../showMessageonTheScreen';
 import {Loader} from '../Loader';
 import { useNavigation } from '@react-navigation/native';
 import screens from '../../constants/screens';
+import moment from 'moment';
 
 const walletData = [{title: 'Wallet'}];
 
@@ -73,7 +74,7 @@ const WalletDeduct = ({previousStep, nextStep, currentPosition, labels}) => {
           username: global.userName,
           name: global.name,
           gender: global.gender,
-          dob: global.dateOfBirth,
+          dob: moment(global.dateOfBirth).format('YYYY-MM-DD'),
           pass: global.password,
           cpass: global.confirmPassword,
           email: global.email,
@@ -95,6 +96,7 @@ const WalletDeduct = ({previousStep, nextStep, currentPosition, labels}) => {
           paypal_email: global.paypalEmail,
           txn_pass: Number(transaction),
           cart_items: global.cartData,
+          user_id: global.userData.id
         },
       );
       const registerObject = {
@@ -108,7 +110,7 @@ const WalletDeduct = ({previousStep, nextStep, currentPosition, labels}) => {
         username: global.userName,
         name: global.name,
         gender: global.gender,
-        dob: global.dateOfBirth,
+        dob: moment(global.dateOfBirth).format('YYYY-MM-DD'),
         pass: global.password,
         cpass: global.confirmPassword,
         email: global.email,
@@ -130,7 +132,10 @@ const WalletDeduct = ({previousStep, nextStep, currentPosition, labels}) => {
         paypal_email: global.paypalEmail,
         txn_pass: Number(transaction),
         cart_items: global.cartData,
+        user_id: global.userData.id
       }
+      console.log('registerObject', registerObject)
+      console.log('response', response?.data)
       showMessageonTheScreen(response?.data?.msg);
       if(response?.data?.status == 200){
         navigation.navigate(screens.registrationPaymentSuccess)

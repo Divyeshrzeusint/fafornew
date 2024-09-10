@@ -297,9 +297,14 @@ const ProfileCreation = ({
               <CustomDropDown
                 placeholder="Select Gender"
                 data={GenderData}
-                onSelect={selectedItem =>
-                  setFieldValue('gender', selectedItem.title)
-                }
+                // onSelect={selectedItem =>
+                //   setFieldValue('gender', selectedItem.title)
+                  
+                // }
+                onSelect={(selectedItem) => {
+                  setFieldValue('gender', selectedItem.title);
+                  setSelectedGender(selectedItem.title)
+                }}
                 selected={values.gender}
                 labelKey={'title'}
                 buttonStyle={styles.dropdownButtonStyle1}
@@ -323,7 +328,11 @@ const ProfileCreation = ({
 
               <CustomDatePicker
                 selectedDate={values.dateOfBirth}
-                setSelectedDate={value => setFieldValue('dateOfBirth', value)}
+                // setSelectedDate={value => setFieldValue('dateOfBirth', value)}
+                setSelectedDate={(value) => {
+                  setFieldValue('dateOfBirth', value)
+                  setSelectedDate(value)
+                }}
                 placeholder="Select a date"
                 buttonStyle={styles.datePickerStyle}
                 buttonTextStyle={styles.dropdownButtonText}
