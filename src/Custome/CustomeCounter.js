@@ -13,24 +13,25 @@ const CustomeCounter = ({
   cartTotalPrice,
   priceLimit,
   type,
+  uniqueId = 'pid'
 }) => {
   const increment = () => {
     if (type == 'register' || type == 'upgrade') {
       if (cartTotalPrice < priceLimit) {
-        handleQuantityChange(item?.pid, quantity + 1);
+        handleQuantityChange(item[uniqueId], quantity + 1);
       } else {
         showMessageonTheScreen(
           'you have reached the price limit for this package',
         );
       }
     } else {
-      handleQuantityChange(item?.product_id, quantity + 1);
+      handleQuantityChange(item[uniqueId], quantity + 1);
     }
   };
 
   const decrement = () => {
     if (quantity > minCount) {
-      handleQuantityChange(item?.pid, quantity - 1);
+      handleQuantityChange(item[uniqueId], quantity - 1);
     }
   };
 

@@ -23,6 +23,9 @@ const RepurchasePurchaseBill = () => {
     qty: item.qty,
   }));
 
+  console.log('sendCartData', sendCartData)
+  console.log('cartData', cartData)
+
   const totalAmount = cartData.reduce((accumulator, item) => {
     return accumulator + parseFloat(item.totalAmount);
   }, 0);

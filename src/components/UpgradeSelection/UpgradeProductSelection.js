@@ -12,6 +12,7 @@ import axiosInstanceForBussiness from '../../utils/axiosInstanceForBussiness';
 import {Loader} from '../Loader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import showMessageonTheScreen from '../showMessageonTheScreen';
+import { useRoute } from '@react-navigation/native';
 
 const UpgradeProductSelection = ({
   previousStep,
@@ -20,6 +21,8 @@ const UpgradeProductSelection = ({
   labels,
   setVisible,
 }) => {
+  // const route = useRoute();
+  // const { from } = route.params;
   const [productData, setProductData] = useState();
   const [cart, setCart] = useState([]);
   const [priceLimit, setPriceLimit] = useState('');
@@ -27,6 +30,8 @@ const UpgradeProductSelection = ({
   useEffect(() => {
     getProductData();
   }, []);
+
+  console.log('priceLimit', priceLimit)
 
   const loadCartFromAsyncStorage = async () => {
     try {
@@ -61,6 +66,7 @@ const UpgradeProductSelection = ({
         {
           package_id: global?.packageId,
           stockist_country: global.userData?.stockist_country,
+          user_id: global?.userData?.id
         },
       );
       global.after_purchase = response?.data?.after_purchase;
@@ -168,6 +174,8 @@ const UpgradeProductSelection = ({
   const cartTotalPrice = cart.reduce((accumulator, item) => {
     return accumulator + parseFloat(item.price) * item.qty;
   }, 0);
+
+  console.log('cartTotalPrice', cartTotalPrice)
 
   const next = () => {
     global.upgradeCartData = cart.map((item, index) => {

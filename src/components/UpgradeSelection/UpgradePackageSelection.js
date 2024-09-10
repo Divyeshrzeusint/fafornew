@@ -37,6 +37,7 @@ const UpgradePackageSelection = ({
         `${apiRoutes.businessUpgrade}/${apiRoutes.upgradePackage}`,
         {package_id: '3'},
       );
+      console.log('global', global?.userData)
       setPackageData(response?.data?.package);
     } catch (error) {
       console.error('Error making POST request:', error);
