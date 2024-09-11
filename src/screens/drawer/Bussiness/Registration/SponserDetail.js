@@ -160,10 +160,7 @@ const SponserDetail = () => {
               placeholder={'Sponsor ID'}
               onChangeText={setSponsorId}
               value={sponsorId}
-<<<<<<< HEAD
               onBlur={handleBlur}
-=======
->>>>>>> df2e860 (all changes are completed)
               borderColor={colors.black}
               borderWidth={scale(1)}
               borderRadius={scale(10)}
